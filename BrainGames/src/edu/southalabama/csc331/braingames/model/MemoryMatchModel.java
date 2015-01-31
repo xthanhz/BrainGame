@@ -22,6 +22,7 @@ public class MemoryMatchModel {
 		f_tiles.clear();
 		
 		//test test git
+		// test 2
 		
 		int tileCount = Integer.parseInt(difficulty.substring(0, 1));
 		tileCount *= tileCount;
