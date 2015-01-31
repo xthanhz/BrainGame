@@ -21,6 +21,8 @@ public class MemoryMatchModel {
 	public void reset(String difficulty, String matchCount) {
 		f_tiles.clear();
 		
+		//test test git
+		
 		int tileCount = Integer.parseInt(difficulty.substring(0, 1));
 		tileCount *= tileCount;
 		
