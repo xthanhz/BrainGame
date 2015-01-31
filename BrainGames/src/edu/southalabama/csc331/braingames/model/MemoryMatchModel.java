@@ -21,7 +21,8 @@ public class MemoryMatchModel {
 	public void reset(String difficulty, String matchCount) {
 		f_tiles.clear();
 		
-		//good now
+		//xfaf
+		//dast3
 		
 		int tileCount = Integer.parseInt(difficulty.substring(0, 1));
 		tileCount *= tileCount;
