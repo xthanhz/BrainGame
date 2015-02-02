@@ -14,13 +14,13 @@ import javax.swing.JToggleButton;
 import edu.southalabama.csc331.braingames.model.MemoryMatchModel;
 
 public class MemoryMatchUI extends JPanel implements ActionListener {
-
+	
+	private final String[] GRID_SIZE = { "3x3", "4x4", "5x5", "6x6", "7x7", "8x8", "9x9", "10x10" };
+	private final String[] DIFFICULTY = { "Easy", "Normal", "Hard" };
+	
 	private MemoryMatchModel f_memoryMatchModel = new MemoryMatchModel();
-	private final String[] DIFFICULTIES = { "3x3", "4x4", "5x5", "6x6", "7x7",
-			"8x8", "9x9", "10x10" };
-	private final String[] MATCH_COUNT = { "2", "3", "4" };
+	private JComboBox<String> f_cbGridSize;
 	private JComboBox<String> f_cbDifficulty;
-	private JComboBox<String> f_cbMatchCount;
 	private JPanel f_pnlTiles;
 
 	public MemoryMatchUI() {
@@ -28,45 +28,46 @@ public class MemoryMatchUI extends JPanel implements ActionListener {
 
 		JPanel pnlHeader = new JPanel();
 
-		JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(this);
+		JButton btnNewGame = new JButton("New Game");
+		btnNewGame.addActionListener(this);
+
+		JLabel lblGridSize = new JLabel("Grid Size: ");
+
+		f_cbGridSize = new JComboBox<String>(GRID_SIZE);
 
 		JLabel lblDifficulty = new JLabel("Difficulty: ");
 
-		f_cbDifficulty = new JComboBox<String>(DIFFICULTIES);
-
-		JLabel lblMatchCount = new JLabel("Match Count: ");
-
-		f_cbMatchCount = new JComboBox<String>(MATCH_COUNT);
+		f_cbDifficulty = new JComboBox<String>(DIFFICULTY);
 
 		JLabel lblTimer = new JLabel("Time 00:00");
 
-		pnlHeader.add(btnReset);
+		pnlHeader.add(btnNewGame);
+		pnlHeader.add(lblGridSize);
+		pnlHeader.add(f_cbGridSize);
 		pnlHeader.add(lblDifficulty);
 		pnlHeader.add(f_cbDifficulty);
-		pnlHeader.add(lblMatchCount);
-		pnlHeader.add(f_cbMatchCount);
 		pnlHeader.add(lblTimer);
 
 		add(pnlHeader, BorderLayout.NORTH);
 
 		f_pnlTiles = new JPanel(new GridLayout());
+		
 		add(f_pnlTiles, BorderLayout.CENTER);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Reset":
-			f_memoryMatchModel.reset((String) f_cbDifficulty.getSelectedItem(),
-					(String) f_cbMatchCount.getSelectedItem());
+		case "New Game":
+			f_memoryMatchModel.newGame((String) f_cbGridSize.getSelectedItem(),
+					(String) f_cbDifficulty.getSelectedItem());
 			
 			f_pnlTiles.removeAll();
+
+			f_pnlTiles.setLayout(new GridLayout(f_memoryMatchModel.getGridSize(), 
+					f_memoryMatchModel.getGridSize()));
 			
 			JToggleButton[] tiles = f_memoryMatchModel.getTiles();
-			int size = (int)Math.sqrt((double)tiles.length);
-			f_pnlTiles.setLayout(new GridLayout(size, size));
-			
 			for(JToggleButton tile : tiles)
 				f_pnlTiles.add(tile);
 			
